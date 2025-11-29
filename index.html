@@ -1,0 +1,73 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>DuoSabor - Cardápio</title>
+<style>
+body { font-family: Arial; background:#f7f3e9; margin:0; padding:20px; }
+header img { width:160px; border-radius:12px; display:block; margin:auto; }
+.card { background:white; padding:15px; margin:10px 0; border-radius:10px; }
+button { padding:10px 15px; border:none; background:#c48a3a; color:white; border-radius:8px; cursor:pointer; }
+#cart { position:fixed; bottom:20px; right:20px; background:#c48a3a; color:white; padding:12px 16px; border-radius:50px; }
+</style>
+</head>
+<body>
+
+<header>
+<h2 style="text-align:center;">DuoSabor • Coroaci</h2>
+<img src="ninho_morango.jpg" />
+<p style="text-align:center;">@Duosabor.coroaci_</p>
+</header>
+
+<h2>Cardápio</h2>
+
+<div id="items"></div>
+
+<a id="cart" href="#">Carrinho (0)</a>
+
+<script>
+const produtos = [
+ {nome:"Ninho com morango", preco:12},
+ {nome:"Ninho com maracujá", preco:12},
+ {nome:"Limão", preco:12},
+ {nome:"Choconinho", preco:12},
+ {nome:"Prestígio", preco:12},
+ {nome:"Churros", preco:12},
+ {nome:"Chocolate", preco:12},
+ {nome:"Cenoura", preco:12},
+ {nome:"Doce de leite 330g", preco:15},
+ {nome:"Doce de leite 660g", preco:30}
+];
+
+let carrinho = [];
+
+function render(){
+ document.getElementById("items").innerHTML =
+   produtos.map((p,i)=>`
+     <div class='card'>
+        <b>${p.nome}</b><br>
+        R$ ${p.preco}
+        <br><br>
+        <button onclick="add(${i})">Adicionar</button>
+     </div>`).join("");
+
+ document.getElementById("cart").innerText = "Carrinho ("+carrinho.length+")";
+ document.getElementById("cart").href =
+     "https://wa.me/?text=" + encodeURIComponent(
+        "Pedido DuoSabor:%0A" +
+        carrinho.map(c=>"- "+c).join("%0A")
+     );
+}
+
+function add(i){
+ carrinho.push(produtos[i].nome + " - R$" + produtos[i].preco);
+ render();
+}
+
+render();
+</script>
+
+</body>
+</html>
